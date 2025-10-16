@@ -3,6 +3,8 @@ import 'package:maestro_test/core/design_system/app_colors.dart';
 import 'package:maestro_test/core/design_system/app_spacing.dart';
 import 'package:maestro_test/core/design_system/app_typography.dart';
 import 'package:maestro_test/core/widgets/language_switcher.dart';
+import 'package:maestro_test/core/widgets/text_input.dart';
+import 'package:maestro_test/core/widgets/primary_button.dart';
 import 'package:maestro_test/di/service_locator.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
@@ -104,19 +106,13 @@ class _TodoViewState extends State<TodoView> {
 
   void _showErrorSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: AppColors.error,
-      ),
+      SnackBar(content: Text(message), backgroundColor: AppColors.error),
     );
   }
 
   void _showSuccessSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: AppColors.success,
-      ),
+      SnackBar(content: Text(message), backgroundColor: AppColors.success),
     );
   }
 
@@ -174,9 +170,7 @@ class _TodoViewState extends State<TodoView> {
               _viewModel.deleteCommand.execute(id);
               Navigator.pop(context);
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.error,
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: Text(l10n.todo_action_delete),
           ),
         ],
@@ -201,8 +195,9 @@ class _TodoViewState extends State<TodoView> {
           ListenableBuilder(
             listenable: _viewModel,
             builder: (context, _) {
-              final completedCount =
-                  _viewModel.todos.where((t) => t.completed).length;
+              final completedCount = _viewModel.todos
+                  .where((t) => t.completed)
+                  .length;
               final totalCount = _viewModel.todos.length;
 
               return Padding(
@@ -228,12 +223,10 @@ class _TodoViewState extends State<TodoView> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: TextInput(
                     controller: _textController,
-                    decoration: InputDecoration(
-                      labelText: l10n.todo_add_field,
-                      hintText: l10n.todo_add_input,
-                    ),
+                    labelText: l10n.todo_add_field,
+                    hintText: l10n.todo_add_input,
                     onSubmitted: (value) {
                       if (value.trim().isNotEmpty) {
                         _viewModel.addCommand.execute(value.trim());
@@ -245,25 +238,16 @@ class _TodoViewState extends State<TodoView> {
                 ListenableBuilder(
                   listenable: _viewModel.addCommand,
                   builder: (context, _) {
-                    return ElevatedButton(
-                      onPressed: _viewModel.addCommand.running
-                          ? null
-                          : () {
-                              final text = _textController.text.trim();
-                              if (text.isNotEmpty) {
-                                _viewModel.addCommand.execute(text);
-                              }
-                            },
-                      child: _viewModel.addCommand.running
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(l10n.todo_add_button),
+                    return PrimaryButton(
+                      onPressed: () {
+                        final text = _textController.text.trim();
+                        if (text.isNotEmpty) {
+                          _viewModel.addCommand.execute(text);
+                        }
+                      },
+                      isLoading: _viewModel.addCommand.running,
+                      child: Text(l10n.todo_add_button),
+                      minWidth: 100,
                     );
                   },
                 ),
@@ -275,9 +259,7 @@ class _TodoViewState extends State<TodoView> {
               listenable: _viewModel.loadCommand,
               builder: (context, child) {
                 if (_viewModel.loadCommand.running) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (_viewModel.loadCommand.hasError) {
@@ -353,7 +335,8 @@ class _TodoViewState extends State<TodoView> {
                       final todo = _viewModel.todos[index];
                       return TodoItem(
                         todo: todo,
-                        onToggle: () => _viewModel.toggleCommand.execute(todo.id),
+                        onToggle: () =>
+                            _viewModel.toggleCommand.execute(todo.id),
                         onDelete: () => _showDeleteConfirmation(todo.id),
                         onEdit: () => _showEditDialog(todo.id, todo.title),
                       );
