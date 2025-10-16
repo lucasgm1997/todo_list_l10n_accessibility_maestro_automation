@@ -7,9 +7,20 @@
 
 env:
   APP_TITLE: app_title
+  TODO_ACTION_CANCEL: todo_action_cancel
+  TODO_ACTION_DELETE: todo_action_delete
+  TODO_ACTION_RETRY: todo_action_retry
+  TODO_ACTION_SAVE: todo_action_save
   TODO_ADD_BUTTON: todo_add_button
   TODO_ADD_FIELD: todo_add_field
   TODO_ADD_INPUT: todo_add_input
+  TODO_DELETE_DIALOG_MESSAGE: todo_delete_dialog_message
+  TODO_DELETE_DIALOG_TITLE: todo_delete_dialog_title
+  TODO_EDIT_DIALOG_HINT: todo_edit_dialog_hint
+  TODO_EDIT_DIALOG_LABEL: todo_edit_dialog_label
+  TODO_EDIT_DIALOG_TITLE: todo_edit_dialog_title
+  TODO_EMPTY_STATE_MESSAGE: todo_empty_state_message
+  TODO_EMPTY_STATE_TITLE: todo_empty_state_title
   TODO_ERROR_MESSAGE: todo_error_message
   TODO_ITEM_CHECKBOX: todo_item_checkbox
   TODO_ITEM_CHECKBOX_COMPLETED: todo_item_checkbox_completed
@@ -20,3 +31,5 @@ env:
   TODO_LIST_EMPTY_MESSAGE: todo_list_empty_message
   TODO_LIST_TITLE: todo_list_title
   TODO_LOADING_INDICATOR: todo_loading_indicator
+  TODO_SUCCESS_DELETED: todo_success_deleted
+  TODO_SUCCESS_EDITED: todo_success_edited

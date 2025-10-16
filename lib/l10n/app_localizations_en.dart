@@ -51,4 +51,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todo_error_message => 'Error loading tasks. Please try again.';
+
+  @override
+  String get todo_edit_dialog_title => 'Edit Task';
+
+  @override
+  String get todo_edit_dialog_label => 'Title';
+
+  @override
+  String get todo_edit_dialog_hint => 'Enter new title';
+
+  @override
+  String get todo_delete_dialog_title => 'Confirm deletion';
+
+  @override
+  String get todo_delete_dialog_message =>
+      'Do you really want to delete this task?';
+
+  @override
+  String get todo_action_cancel => 'Cancel';
+
+  @override
+  String get todo_action_save => 'Save';
+
+  @override
+  String get todo_action_delete => 'Delete';
+
+  @override
+  String get todo_action_retry => 'Try again';
+
+  @override
+  String get todo_success_deleted => 'Task deleted successfully';
+
+  @override
+  String get todo_success_edited => 'Task edited successfully';
+
+  @override
+  String get todo_empty_state_title => 'No tasks';
+
+  @override
+  String get todo_empty_state_message => 'Add a new task to get started';
 }

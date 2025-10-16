@@ -27,5 +27,31 @@
 
   "todo_loading_indicator": "Carregando tarefas...",
 
-  "todo_error_message": "Erro ao carregar tarefas. Tente novamente."
+  "todo_error_message": "Erro ao carregar tarefas. Tente novamente.",
+
+  "todo_edit_dialog_title": "Editar Tarefa",
+
+  "todo_edit_dialog_label": "Título",
+
+  "todo_edit_dialog_hint": "Digite o novo título",
+
+  "todo_delete_dialog_title": "Confirmar exclusão",
+
+  "todo_delete_dialog_message": "Deseja realmente excluir esta tarefa?",
+
+  "todo_action_cancel": "Cancelar",
+
+  "todo_action_save": "Salvar",
+
+  "todo_action_delete": "Excluir",
+
+  "todo_action_retry": "Tentar novamente",
+
+  "todo_success_deleted": "Tarefa removida com sucesso",
+
+  "todo_success_edited": "Tarefa editada com sucesso",
+
+  "todo_empty_state_title": "Nenhuma tarefa",
+
+  "todo_empty_state_message": "Adicione uma nova tarefa para começar"
 }

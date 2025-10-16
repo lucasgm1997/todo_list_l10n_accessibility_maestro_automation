@@ -12,6 +12,18 @@ class AppSemantics {
   /// Identifier for: app_title
   static const String appTitle = 'app_title';
 
+  /// Identifier for: todo_action_cancel
+  static const String todoActionCancel = 'todo_action_cancel';
+
+  /// Identifier for: todo_action_delete
+  static const String todoActionDelete = 'todo_action_delete';
+
+  /// Identifier for: todo_action_retry
+  static const String todoActionRetry = 'todo_action_retry';
+
+  /// Identifier for: todo_action_save
+  static const String todoActionSave = 'todo_action_save';
+
   /// Identifier for: todo_add_button
   static const String todoAddButton = 'todo_add_button';
 
@@ -20,6 +32,27 @@ class AppSemantics {
 
   /// Identifier for: todo_add_input
   static const String todoAddInput = 'todo_add_input';
+
+  /// Identifier for: todo_delete_dialog_message
+  static const String todoDeleteDialogMessage = 'todo_delete_dialog_message';
+
+  /// Identifier for: todo_delete_dialog_title
+  static const String todoDeleteDialogTitle = 'todo_delete_dialog_title';
+
+  /// Identifier for: todo_edit_dialog_hint
+  static const String todoEditDialogHint = 'todo_edit_dialog_hint';
+
+  /// Identifier for: todo_edit_dialog_label
+  static const String todoEditDialogLabel = 'todo_edit_dialog_label';
+
+  /// Identifier for: todo_edit_dialog_title
+  static const String todoEditDialogTitle = 'todo_edit_dialog_title';
+
+  /// Identifier for: todo_empty_state_message
+  static const String todoEmptyStateMessage = 'todo_empty_state_message';
+
+  /// Identifier for: todo_empty_state_title
+  static const String todoEmptyStateTitle = 'todo_empty_state_title';
 
   /// Identifier for: todo_error_message
   static const String todoErrorMessage = 'todo_error_message';
@@ -50,5 +83,11 @@ class AppSemantics {
 
   /// Identifier for: todo_loading_indicator
   static const String todoLoadingIndicator = 'todo_loading_indicator';
+
+  /// Identifier for: todo_success_deleted
+  static const String todoSuccessDeleted = 'todo_success_deleted';
+
+  /// Identifier for: todo_success_edited
+  static const String todoSuccessEdited = 'todo_success_edited';
 
 }

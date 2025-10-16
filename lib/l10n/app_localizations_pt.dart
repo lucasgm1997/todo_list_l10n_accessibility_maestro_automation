@@ -52,4 +52,45 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get todo_error_message => 'Erro ao carregar tarefas. Tente novamente.';
+
+  @override
+  String get todo_edit_dialog_title => 'Editar Tarefa';
+
+  @override
+  String get todo_edit_dialog_label => 'Título';
+
+  @override
+  String get todo_edit_dialog_hint => 'Digite o novo título';
+
+  @override
+  String get todo_delete_dialog_title => 'Confirmar exclusão';
+
+  @override
+  String get todo_delete_dialog_message =>
+      'Deseja realmente excluir esta tarefa?';
+
+  @override
+  String get todo_action_cancel => 'Cancelar';
+
+  @override
+  String get todo_action_save => 'Salvar';
+
+  @override
+  String get todo_action_delete => 'Excluir';
+
+  @override
+  String get todo_action_retry => 'Tentar novamente';
+
+  @override
+  String get todo_success_deleted => 'Tarefa removida com sucesso';
+
+  @override
+  String get todo_success_edited => 'Tarefa editada com sucesso';
+
+  @override
+  String get todo_empty_state_title => 'Nenhuma tarefa';
+
+  @override
+  String get todo_empty_state_message =>
+      'Adicione uma nova tarefa para começar';
 }

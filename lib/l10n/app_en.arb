@@ -75,5 +75,70 @@
   "todo_error_message": "Error loading tasks. Please try again.",
   "@todo_error_message": {
     "description": "Error message when tasks fail to load"
+  },
+
+  "todo_edit_dialog_title": "Edit Task",
+  "@todo_edit_dialog_title": {
+    "description": "Title for edit task dialog"
+  },
+
+  "todo_edit_dialog_label": "Title",
+  "@todo_edit_dialog_label": {
+    "description": "Label for task title input in edit dialog"
+  },
+
+  "todo_edit_dialog_hint": "Enter new title",
+  "@todo_edit_dialog_hint": {
+    "description": "Hint text for edit dialog input"
+  },
+
+  "todo_delete_dialog_title": "Confirm deletion",
+  "@todo_delete_dialog_title": {
+    "description": "Title for delete confirmation dialog"
+  },
+
+  "todo_delete_dialog_message": "Do you really want to delete this task?",
+  "@todo_delete_dialog_message": {
+    "description": "Message for delete confirmation dialog"
+  },
+
+  "todo_action_cancel": "Cancel",
+  "@todo_action_cancel": {
+    "description": "Cancel button label"
+  },
+
+  "todo_action_save": "Save",
+  "@todo_action_save": {
+    "description": "Save button label"
+  },
+
+  "todo_action_delete": "Delete",
+  "@todo_action_delete": {
+    "description": "Delete button label in confirmation dialog"
+  },
+
+  "todo_action_retry": "Try again",
+  "@todo_action_retry": {
+    "description": "Retry button label"
+  },
+
+  "todo_success_deleted": "Task deleted successfully",
+  "@todo_success_deleted": {
+    "description": "Success message when task is deleted"
+  },
+
+  "todo_success_edited": "Task edited successfully",
+  "@todo_success_edited": {
+    "description": "Success message when task is edited"
+  },
+
+  "todo_empty_state_title": "No tasks",
+  "@todo_empty_state_title": {
+    "description": "Title shown when todo list is empty"
+  },
+
+  "todo_empty_state_message": "Add a new task to get started",
+  "@todo_empty_state_message": {
+    "description": "Message shown when todo list is empty"
   }
 }

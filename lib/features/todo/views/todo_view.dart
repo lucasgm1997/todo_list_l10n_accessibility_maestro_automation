@@ -6,6 +6,7 @@ import 'package:maestro_test/core/widgets/language_switcher.dart';
 import 'package:maestro_test/di/service_locator.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
+import 'package:maestro_test/l10n/app_localizations.dart';
 
 class TodoView extends StatefulWidget {
   final Locale currentLocale;
@@ -83,7 +84,8 @@ class _TodoViewState extends State<TodoView> {
 
     if (_viewModel.deleteCommand.isSuccess) {
       _viewModel.deleteCommand.clearResult();
-      _showSuccessSnackbar('Tarefa removida com sucesso');
+      final l10n = AppLocalizations.of(context)!;
+      _showSuccessSnackbar(l10n.todo_success_deleted);
     }
   }
 
@@ -95,7 +97,8 @@ class _TodoViewState extends State<TodoView> {
 
     if (_viewModel.editCommand.isSuccess) {
       _viewModel.editCommand.clearResult();
-      _showSuccessSnackbar('Tarefa editada com sucesso');
+      final l10n = AppLocalizations.of(context)!;
+      _showSuccessSnackbar(l10n.todo_success_edited);
     }
   }
 
@@ -118,24 +121,25 @@ class _TodoViewState extends State<TodoView> {
   }
 
   void _showEditDialog(String id, String currentTitle) {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: currentTitle);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Editar Tarefa'),
+        title: Text(l10n.todo_edit_dialog_title),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            labelText: 'Título',
-            hintText: 'Digite o novo título',
+          decoration: InputDecoration(
+            labelText: l10n.todo_edit_dialog_label,
+            hintText: l10n.todo_edit_dialog_hint,
           ),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(l10n.todo_action_cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -145,7 +149,7 @@ class _TodoViewState extends State<TodoView> {
                 Navigator.pop(context);
               }
             },
-            child: const Text('Salvar'),
+            child: Text(l10n.todo_action_save),
           ),
         ],
       ),
@@ -153,15 +157,17 @@ class _TodoViewState extends State<TodoView> {
   }
 
   void _showDeleteConfirmation(String id) {
+    final l10n = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirmar exclusão'),
-        content: const Text('Deseja realmente excluir esta tarefa?'),
+        title: Text(l10n.todo_delete_dialog_title),
+        content: Text(l10n.todo_delete_dialog_message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(l10n.todo_action_cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -171,7 +177,7 @@ class _TodoViewState extends State<TodoView> {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Excluir'),
+            child: Text(l10n.todo_action_delete),
           ),
         ],
       ),
@@ -180,9 +186,11 @@ class _TodoViewState extends State<TodoView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minhas Tarefas'),
+        title: Text(l10n.todo_list_title),
         actions: [
           // Language switcher button
           LanguageSwitcher(
@@ -222,9 +230,9 @@ class _TodoViewState extends State<TodoView> {
                 Expanded(
                   child: TextField(
                     controller: _textController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nova tarefa',
-                      hintText: 'Digite uma tarefa...',
+                    decoration: InputDecoration(
+                      labelText: l10n.todo_add_field,
+                      hintText: l10n.todo_add_input,
                     ),
                     onSubmitted: (value) {
                       if (value.trim().isNotEmpty) {
@@ -255,7 +263,7 @@ class _TodoViewState extends State<TodoView> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Text('Adicionar'),
+                          : Text(l10n.todo_add_button),
                     );
                   },
                 ),
@@ -299,7 +307,7 @@ class _TodoViewState extends State<TodoView> {
                         ElevatedButton.icon(
                           onPressed: () => _viewModel.loadCommand.execute(),
                           icon: const Icon(Icons.refresh),
-                          label: const Text('Tentar novamente'),
+                          label: Text(l10n.todo_action_retry),
                         ),
                       ],
                     ),
@@ -323,12 +331,12 @@ class _TodoViewState extends State<TodoView> {
                           ),
                           const SizedBox(height: AppSpacing.md),
                           Text(
-                            'Nenhuma tarefa',
+                            l10n.todo_empty_state_title,
                             style: AppTypography.h3,
                           ),
                           const SizedBox(height: AppSpacing.sm),
                           Text(
-                            'Adicione uma nova tarefa para começar',
+                            l10n.todo_empty_state_message,
                             style: AppTypography.bodyMedium.copyWith(
                               color: AppColors.textSecondary,
                             ),

@@ -181,6 +181,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error loading tasks. Please try again.'**
   String get todo_error_message;
+
+  /// Title for edit task dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Task'**
+  String get todo_edit_dialog_title;
+
+  /// Label for task title input in edit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get todo_edit_dialog_label;
+
+  /// Hint text for edit dialog input
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new title'**
+  String get todo_edit_dialog_hint;
+
+  /// Title for delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion'**
+  String get todo_delete_dialog_title;
+
+  /// Message for delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Do you really want to delete this task?'**
+  String get todo_delete_dialog_message;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get todo_action_cancel;
+
+  /// Save button label
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get todo_action_save;
+
+  /// Delete button label in confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get todo_action_delete;
+
+  /// Retry button label
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get todo_action_retry;
+
+  /// Success message when task is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Task deleted successfully'**
+  String get todo_success_deleted;
+
+  /// Success message when task is edited
+  ///
+  /// In en, this message translates to:
+  /// **'Task edited successfully'**
+  String get todo_success_edited;
+
+  /// Title shown when todo list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks'**
+  String get todo_empty_state_title;
+
+  /// Message shown when todo list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new task to get started'**
+  String get todo_empty_state_message;
 }
 
 class _AppLocalizationsDelegate
