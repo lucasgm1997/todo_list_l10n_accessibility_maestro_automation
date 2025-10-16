@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maestro_test/core/design_system/app_typography.dart';
+import 'package:maestro_test/core/semantics/app_semantics.dart';
+import 'package:maestro_test/l10n/app_localizations.dart';
 
 class TodoSubtitle extends StatelessWidget {
   final DateTime createdAt;
@@ -11,9 +13,17 @@ class TodoSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _formatDate(createdAt),
-      style: AppTypography.caption,
+    final l10n = AppLocalizations.of(context)!;
+    final formattedDate = _formatDate(createdAt);
+
+    return Semantics(
+      identifier: AppSemantics.todoItemSubtitle,
+      label: l10n.todo_item_subtitle(formattedDate),
+      value: formattedDate,
+      child: Text(
+        formattedDate,
+        style: AppTypography.caption,
+      ),
     );
   }
 
