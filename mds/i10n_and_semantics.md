@@ -22,12 +22,17 @@
 ### Internacionalização (i18n)
 
 - Utilizar o sistema de ARB (Application Resource Bundle) do Flutter
-- Implementar geração de código para as strings traduzidas via `gen-l10n`
-- Criar arquivos ARB para português (default) e inglês
+- Implementar geração de código para as strings traduzidas via `flutter gen-l10n`
+- Criar arquivos ARB: `app_en.arb` (template) e `app_pt.arb` (tradução)
+- Flutter gera automaticamente em `.dart_tool/flutter_gen/gen_l10n/`:
+  - `app_localizations.dart` - classe abstrata
+  - `app_localizations_en.dart` - implementação inglês
+  - `app_localizations_pt.dart` - implementação português
 - Utilizar classes geradas para acesso type-safe às traduções (evitar strings literais)
 - Definir keys significativas e estáveis nos ARBs para uso como identificadores
 - Evitar uso de strings hardcoded para textos visíveis ao usuário
 - **ARB keys NUNCA devem mudar** - apenas valores (traduções)
+- Flutter converte keys snake_case em getters camelCase automaticamente
 
 ### Semantics e Identificadores Type-Safe
 
@@ -61,19 +66,25 @@
 ```
 lib/
   l10n/
-    app_en.arb                      # Traduções em inglês
-    app_pt.arb                      # Traduções em português (FONTE DA VERDADE)
-    l10n.yaml                       # Configuração do gen-l10n
+    app_en.arb                      # Traduções em inglês (template)
+    app_pt.arb                      # Traduções em português
   core/
     semantics/
       app_semantics.dart            # Constantes geradas a partir do ARB
+l10n.yaml                           # Configuração do gen-l10n (raiz do projeto)
 tools/
-  generate_semantics.dart           # Script de geração das constantes
+  generate_semantics.dart           # Script de geração das constantes Semantics + Maestro
 maestro_flows/
   constants.yaml                    # Variáveis para Maestro (mesmas keys do ARB)
   flows/
     add_todo.yaml                   # Flows usando variáveis
     delete_todo.yaml
+
+# Código gerado automaticamente pelo Flutter (NÃO COMMITAR):
+.dart_tool/flutter_gen/gen_l10n/
+  app_localizations.dart            # Classe abstrata base
+  app_localizations_en.dart         # Implementação inglês
+  app_localizations_pt.dart         # Implementação português
 ```
 
 ## Padrão de Nomenclatura
@@ -107,12 +118,22 @@ env:
 
 ### Uso nos Widgets
 ```dart
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maestro_test/core/semantics/app_semantics.dart';
+
+// No widget:
+final l10n = AppLocalizations.of(context);
+
 Semantics(
   identifier: AppSemantics.todoItemDeleteButton,
-  label: AppLocalizations.of(context).todo_item_delete_button,
+  label: l10n.todoItemDeleteButton,  // Getter gerado pelo Flutter
   child: IconButton(...),
 )
 ```
+
+**Nota**: O Flutter gera getters camelCase a partir das keys snake_case.
+- Key ARB: `todo_item_delete_button`
+- Getter gerado: `l10n.todoItemDeleteButton`
 
 ### Uso no Maestro
 ```yaml
@@ -122,34 +143,132 @@ Semantics(
 
 ## Fluxo de Geração (Build Pipeline)
 
-1. **Desenvolvedor cria/edita** `lib/l10n/app_pt.arb` com novas keys
-2. **Script automático** `tools/generate_semantics.dart`:
-   - Lê todas as keys do `app_pt.arb`
-   - Gera `lib/core/semantics/app_semantics.dart` com constantes Dart
-   - Gera `maestro_flows/constants.yaml` com variáveis de ambiente
-3. **Flutter gen-l10n** (nativo) gera `AppLocalizations`
-4. **Widgets** usam `AppSemantics` + `AppLocalizations`
-5. **Maestro flows** usam variáveis do `constants.yaml`
+### Passo a Passo
 
-### Comando de Geração
+1. **Desenvolvedor edita** `lib/l10n/app_en.arb` (arquivo template) com novas keys/values
+2. **Desenvolvedor edita** `lib/l10n/app_pt.arb` (e outros idiomas) com traduções
+3. **Script customizado** `tools/generate_semantics.dart`:
+   - Lê todas as keys do arquivo template ARB (`app_en.arb`)
+   - Gera `lib/core/semantics/app_semantics.dart` (constantes para Semantics)
+   - Gera `maestro_flows/constants.yaml` (variáveis para Maestro)
+4. **Flutter gen-l10n** (automático ou manual):
+   - Lê `l10n.yaml` e todos os ARB files
+   - Gera classes em `.dart_tool/flutter_gen/gen_l10n/`
+   - Cria `AppLocalizations` abstrata e implementações por locale
+5. **Widgets** usam:
+   - `AppSemantics.constantName` para identificadores
+   - `AppLocalizations.of(context).getterName` para textos traduzidos
+6. **Maestro flows** usam:
+   - Variáveis de `constants.yaml`: `${CONSTANT_NAME}`
+
+### Comandos de Geração
+
 ```bash
-# Gera semantics e constantes do Maestro
+# 1. Gerar constantes Semantics + Maestro (script customizado)
 dart run tools/generate_semantics.dart
 
-# Gera AppLocalizations (Flutter nativo)
+# 2. Gerar AppLocalizations (Flutter nativo - roda automaticamente no flutter run)
 flutter gen-l10n
+
+# Ou gerar tudo e rodar:
+dart run tools/generate_semantics.dart && flutter gen-l10n && flutter run
+```
+
+### Configuração l10n.yaml (raiz do projeto)
+
+```yaml
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+```
+
+### Configuração pubspec.yaml
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+flutter:
+  generate: true  # Ativa geração automática
+```
+
+## Exemplo Completo ARB → Dart → Maestro
+
+### 1. Arquivo ARB (app_en.arb)
+```json
+{
+  "@@locale": "en",
+  "todo_item_delete_button": "Delete task",
+  "@todo_item_delete_button": {
+    "description": "Label for delete button in todo item"
+  },
+  "todo_item_checkbox": "Mark as complete",
+  "todo_add_button": "Add"
+}
+```
+
+### 2. Código Gerado pelo Flutter (app_localizations_en.dart)
+```dart
+class AppLocalizationsEn extends AppLocalizations {
+  @override
+  String get todoItemDeleteButton => 'Delete task';
+
+  @override
+  String get todoItemCheckbox => 'Mark as complete';
+
+  @override
+  String get todoAddButton => 'Add';
+}
+```
+
+### 3. Constantes Geradas pelo Script (app_semantics.dart)
+```dart
+class AppSemantics {
+  static const String todoItemDeleteButton = 'todo_item_delete_button';
+  static const String todoItemCheckbox = 'todo_item_checkbox';
+  static const String todoAddButton = 'todo_add_button';
+}
+```
+
+### 4. Variáveis Geradas pelo Script (constants.yaml)
+```yaml
+env:
+  TODO_ITEM_DELETE_BUTTON: todo_item_delete_button
+  TODO_ITEM_CHECKBOX: todo_item_checkbox
+  TODO_ADD_BUTTON: todo_add_button
+```
+
+### 5. Uso no Widget
+```dart
+Semantics(
+  identifier: AppSemantics.todoItemDeleteButton,  // 'todo_item_delete_button'
+  label: l10n.todoItemDeleteButton,               // 'Delete task' ou 'Excluir'
+  child: IconButton(onPressed: onDelete, icon: Icon(Icons.delete)),
+)
+```
+
+### 6. Uso no Maestro Flow
+```yaml
+- tapOn:
+    id: ${TODO_ITEM_DELETE_BUTTON}  # Expande para 'todo_item_delete_button'
 ```
 
 ## Critérios de Aceitação
 
-1. Todas as strings visíveis devem ser acessadas via `AppLocalizations` gerado
-2. Todos os identificadores Semantics devem usar constantes de `AppSemantics`, não strings literais
-3. Identificadores devem ser baseados em keys ARB, não em valores traduzidos
+1. Todas as strings visíveis devem ser acessadas via `AppLocalizations.of(context).getterName`
+2. Todos os identificadores Semantics devem usar `AppSemantics.constantName`, não strings literais
+3. Identificadores devem ser baseados em keys ARB (snake_case), não em valores traduzidos
 4. Testes E2E com Maestro devem usar apenas variáveis do `constants.yaml`
 5. Nenhuma string literal deve ser usada para textos ou identificadores
 6. Alterações nas traduções (valores ARB) não devem quebrar os testes E2E
 7. A aplicação deve funcionar corretamente em português e inglês
 8. O código deve compilar com type-safety total
-9. **Script de geração deve rodar automaticamente antes do build**
-10. **Adicionar key nova no ARB deve refletir automaticamente em Dart e Maestro**
+9. Flutter deve gerar getters camelCase a partir das keys snake_case
+10. Script customizado deve gerar constantes snake_case preservando as keys originais
 11. **ARB é a única fonte - modificar apenas ARB, nunca as constantes geradas**
+12. Código gerado pelo Flutter vai para `.dart_tool/` (não commitar)
+13. Código gerado pelo script customizado vai para `lib/core/semantics/` (commitar)
