@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:maestro_test/core/design_system/app_colors.dart';
 import 'package:maestro_test/core/design_system/app_spacing.dart';
 import 'package:maestro_test/core/design_system/app_typography.dart';
+import 'package:maestro_test/core/widgets/language_switcher.dart';
 import 'package:maestro_test/di/service_locator.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
 
 class TodoView extends StatefulWidget {
-  const TodoView({super.key});
+  final Locale currentLocale;
+  final ValueChanged<Locale> onLocaleChanged;
+
+  const TodoView({
+    super.key,
+    required this.currentLocale,
+    required this.onLocaleChanged,
+  });
 
   @override
   State<TodoView> createState() => _TodoViewState();
@@ -176,6 +184,12 @@ class _TodoViewState extends State<TodoView> {
       appBar: AppBar(
         title: const Text('Minhas Tarefas'),
         actions: [
+          // Language switcher button
+          LanguageSwitcher(
+            currentLocale: widget.currentLocale,
+            onLocaleChanged: widget.onLocaleChanged,
+          ),
+          // Task counter
           ListenableBuilder(
             listenable: _viewModel,
             builder: (context, _) {
