@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maestro_test/core/design_system/app_spacing.dart';
+import 'package:maestro_test/core/semantics/app_semantics.dart';
+import 'package:maestro_test/l10n/app_localizations.dart';
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -17,25 +19,32 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: isLoading ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
+    final l10n = AppLocalizations.of(context)!;
+
+    return Semantics(
+      identifier: AppSemantics.todoAddButton,
+      label: l10n.todo_add_button,
+      button: true,
+      child: ElevatedButton(
+        onPressed: isLoading ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
+          minimumSize: Size(minWidth ?? 0, 40),
         ),
-        minimumSize: Size(minWidth ?? 0, 40),
+        child: isLoading
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : child,
       ),
-      child: isLoading
-          ? const SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.white,
-              ),
-            )
-          : child,
     );
   }
 }
