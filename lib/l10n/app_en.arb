@@ -1,0 +1,79 @@
+{
+  "@@locale": "en",
+
+  "app_title": "Todo List",
+  "@app_title": {
+    "description": "Application title"
+  },
+
+  "todo_list_title": "My Tasks",
+  "@todo_list_title": {
+    "description": "Title for the todo list screen"
+  },
+
+  "todo_list_empty_message": "No tasks yet. Add one to get started!",
+  "@todo_list_empty_message": {
+    "description": "Message shown when todo list is empty"
+  },
+
+  "todo_item_checkbox": "Mark task as complete",
+  "@todo_item_checkbox": {
+    "description": "Label for checkbox to mark task as complete"
+  },
+
+  "todo_item_checkbox_completed": "Task completed",
+  "@todo_item_checkbox_completed": {
+    "description": "Label for checkbox when task is already completed"
+  },
+
+  "todo_item_delete_button": "Delete task",
+  "@todo_item_delete_button": {
+    "description": "Label for delete button in todo item"
+  },
+
+  "todo_item_edit_button": "Edit task",
+  "@todo_item_edit_button": {
+    "description": "Label for edit button in todo item"
+  },
+
+  "todo_item_title": "Task title",
+  "@todo_item_title": {
+    "description": "Label for task title text"
+  },
+
+  "todo_item_subtitle": "Created on {date}",
+  "@todo_item_subtitle": {
+    "description": "Subtitle showing task creation date",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2024-01-15"
+      }
+    }
+  },
+
+  "todo_add_input": "Type a task...",
+  "@todo_add_input": {
+    "description": "Placeholder text for add task input field"
+  },
+
+  "todo_add_button": "Add",
+  "@todo_add_button": {
+    "description": "Label for add task button"
+  },
+
+  "todo_add_field": "New task",
+  "@todo_add_field": {
+    "description": "Label for new task input field"
+  },
+
+  "todo_loading_indicator": "Loading tasks...",
+  "@todo_loading_indicator": {
+    "description": "Label for loading indicator"
+  },
+
+  "todo_error_message": "Error loading tasks. Please try again.",
+  "@todo_error_message": {
+    "description": "Error message when tasks fail to load"
+  }
+}

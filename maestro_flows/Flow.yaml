@@ -1,5 +1,28 @@
 appId: com.example.maestro_test
+
+# Import constants
+env:
+  extends:
+    - constants.yaml
+
 ---
-- tapOn: "Nova tarefa\nDigite uma tarefa..."
-- inputText: "aaa"
-- tapOn: "Adicionar"
+- launchApp
+
+# Add a new todo
+- tapOn:
+    id: ${TODO_ADD_INPUT}
+- inputText: "Test task from Maestro"
+- tapOn:
+    id: ${TODO_ADD_BUTTON}
+
+# Verify todo was added
+- assertVisible:
+    id: ${TODO_ITEM_TITLE}
+
+# Mark as complete
+- tapOn:
+    id: ${TODO_ITEM_CHECKBOX}
+
+# Delete the todo
+- tapOn:
+    id: ${TODO_ITEM_DELETE_BUTTON}

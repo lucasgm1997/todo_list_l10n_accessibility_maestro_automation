@@ -1,0 +1,31 @@
+{
+  "@@locale": "pt",
+
+  "app_title": "Lista de Tarefas",
+
+  "todo_list_title": "Minhas Tarefas",
+
+  "todo_list_empty_message": "Nenhuma tarefa ainda. Adicione uma para começar!",
+
+  "todo_item_checkbox": "Marcar tarefa como concluída",
+
+  "todo_item_checkbox_completed": "Tarefa concluída",
+
+  "todo_item_delete_button": "Excluir tarefa",
+
+  "todo_item_edit_button": "Editar tarefa",
+
+  "todo_item_title": "Título da tarefa",
+
+  "todo_item_subtitle": "Criada em {date}",
+
+  "todo_add_input": "Digite uma tarefa...",
+
+  "todo_add_button": "Adicionar",
+
+  "todo_add_field": "Nova tarefa",
+
+  "todo_loading_indicator": "Carregando tarefas...",
+
+  "todo_error_message": "Erro ao carregar tarefas. Tente novamente."
+}
