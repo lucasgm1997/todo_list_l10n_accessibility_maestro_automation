@@ -8,20 +8,25 @@ class TodoTitle extends StatelessWidget {
   final String title;
   final bool completed;
   final bool isPending;
+  final int? index;
 
   const TodoTitle({
     super.key,
     required this.title,
     required this.completed,
     required this.isPending,
+    this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final semanticId = index != null
+        ? '${AppSemantics.todoItemTitle}_$index'
+        : AppSemantics.todoItemTitle;
 
     return Semantics(
-      identifier: AppSemantics.todoItemTitle,
+      identifier: semanticId,
       label: l10n.todo_item_title,
       value: title,
       child: Text(

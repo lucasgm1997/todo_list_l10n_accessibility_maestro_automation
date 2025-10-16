@@ -5,18 +5,23 @@ import 'package:maestro_test/l10n/app_localizations.dart';
 
 class TodoEditButton extends StatelessWidget {
   final VoidCallback onEdit;
+  final int? index;
 
   const TodoEditButton({
     super.key,
     required this.onEdit,
+    this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final semanticId = index != null
+        ? '${AppSemantics.todoItemEditButton}_$index'
+        : AppSemantics.todoItemEditButton;
 
     return Semantics(
-      identifier: AppSemantics.todoItemEditButton,
+      identifier: semanticId,
       label: l10n.todo_item_edit_button,
       button: true,
       child: IconButton(

@@ -1,0 +1,96 @@
+appId: com.example.maestro_test
+
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to load
+- assertVisible:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+
+# Test 1: Check if there are any existing items (dynamic count)
+# Using optional assertions to handle varying counts
+
+# Try to interact with first item if it exists
+- runFlow:
+    when:
+      visible:
+        id: todo_item_title_0
+    commands:
+      # First item exists, verify its components
+      - assertVisible:
+          id: todo_item_checkbox_0
+      - assertVisible:
+          id: todo_item_delete_0
+
+      # Toggle the first item
+      - tapOn:
+          id: todo_item_checkbox_0
+
+      # Wait a moment for the update
+
+# Try to interact with second item if it exists
+- runFlow:
+    when:
+      visible:
+        id: todo_item_title_1
+    commands:
+      # Second item exists, delete it
+      - tapOn:
+          id: todo_item_delete_1
+
+# Add a new item (this will work regardless of current count)
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+- inputText: "Dynamic Test Item"
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_BUTTON}
+
+# The new item should now be visible (we don't know its exact index)
+# But we can search for it by text or by checking multiple indices
+- runFlow:
+    when:
+      visible: "Dynamic Test Item"
+    commands:
+      - evalScript: ${console.log('New item added successfully')}
+
+# Try to find and interact with the newly added item
+# Check indices 0-5 to find it
+- runFlow:
+    when:
+      visible:
+        id: todo_item_title_0
+    commands:
+      - runFlow:
+          when:
+            visible:
+              text: "Dynamic Test Item"
+          commands:
+            - tapOn:
+                id: todo_item_checkbox_0
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_title_1
+    commands:
+      - runFlow:
+          when:
+            visible:
+              text: "Dynamic Test Item"
+          commands:
+            - tapOn:
+                id: todo_item_checkbox_1
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_title_2
+    commands:
+      - runFlow:
+          when:
+            visible:
+              text: "Dynamic Test Item"
+          commands:
+            - tapOn:
+                id: todo_item_checkbox_2

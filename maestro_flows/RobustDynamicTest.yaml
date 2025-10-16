@@ -1,0 +1,146 @@
+appId: com.example.maestro_test
+
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to be ready
+- assertVisible:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+
+# Test robustness with dynamic item count
+
+# Scenario 1: Add multiple items
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+- inputText: "First Dynamic Item"
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_BUTTON}
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "First Dynamic Item"
+    timeout: 5000
+
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+- inputText: "Second Dynamic Item"
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_BUTTON}
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Second Dynamic Item"
+    timeout: 5000
+
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+- inputText: "Third Dynamic Item"
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_BUTTON}
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Third Dynamic Item"
+    timeout: 5000
+
+# Now we should have at least 3 items (plus any that were pre-loaded)
+# Let's interact with them by index
+
+# Scenario 2: Toggle items by index
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_0
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_0
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_1
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_1
+
+# Scenario 3: Delete last added item (should be at some index)
+# Try indices in reverse order to find the last item
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_10
+    commands:
+      - tapOn:
+          id: todo_item_delete_10
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_9
+    commands:
+      - tapOn:
+          id: todo_item_delete_9
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_8
+    commands:
+      - tapOn:
+          id: todo_item_delete_8
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_7
+    commands:
+      - tapOn:
+          id: todo_item_delete_7
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_6
+    commands:
+      - tapOn:
+          id: todo_item_delete_6
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_5
+    commands:
+      - tapOn:
+          id: todo_item_delete_5
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_4
+    commands:
+      - tapOn:
+          id: todo_item_delete_4
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_3
+    commands:
+      - tapOn:
+          id: todo_item_delete_3
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_delete_2
+    commands:
+      - tapOn:
+          id: todo_item_delete_2
+
+# Scenario 4: Verify we can still add items after operations
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+- inputText: "Final Test Item"
+- tapOn:
+    id: ${MAESTRO_TODO_ADD_BUTTON}
+
+# Verify the item was added by looking for its text
+- assertVisible: "Final Test Item"

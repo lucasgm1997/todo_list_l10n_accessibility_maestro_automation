@@ -335,6 +335,7 @@ class _TodoViewState extends State<TodoView> {
                       final todo = _viewModel.todos[index];
                       return TodoItem(
                         todo: todo,
+                        index: index,
                         onToggle: () =>
                             _viewModel.toggleCommand.execute(todo.id),
                         onDelete: () => _showDeleteConfirmation(todo.id),

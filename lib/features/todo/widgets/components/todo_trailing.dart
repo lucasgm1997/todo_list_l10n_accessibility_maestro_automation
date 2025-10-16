@@ -7,12 +7,14 @@ class TodoTrailing extends StatelessWidget {
   final bool isPending;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final int? index;
 
   const TodoTrailing({
     super.key,
     required this.isPending,
     required this.onEdit,
     required this.onDelete,
+    this.index,
   });
 
   @override
@@ -24,8 +26,8 @@ class TodoTrailing extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        TodoEditButton(onEdit: onEdit),
-        TodoDeleteButton(onDelete: onDelete),
+        TodoEditButton(onEdit: onEdit, index: index),
+        TodoDeleteButton(onDelete: onDelete, index: index),
       ],
     );
   }

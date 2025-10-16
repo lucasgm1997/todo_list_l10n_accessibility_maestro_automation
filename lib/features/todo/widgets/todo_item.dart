@@ -8,6 +8,7 @@ import 'package:maestro_test/features/todo/widgets/components/todo_trailing.dart
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
+  final int index;
   final VoidCallback onToggle;
   final VoidCallback onDelete;
   final VoidCallback onEdit;
@@ -15,6 +16,7 @@ class TodoItem extends StatelessWidget {
   const TodoItem({
     super.key,
     required this.todo,
+    required this.index,
     required this.onToggle,
     required this.onDelete,
     required this.onEdit,
@@ -22,28 +24,35 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.xs,
-        ),
-        leading: TodoCheckbox(
-          completed: todo.completed,
-          isPending: todo.isPending,
-          onToggle: onToggle,
-        ),
-        title: TodoTitle(
-          title: todo.title,
-          completed: todo.completed,
-          isPending: todo.isPending,
-        ),
-        subtitle: TodoSubtitle(createdAt: todo.createdAt),
-        trailing: TodoTrailing(
-          isPending: todo.isPending,
-          onEdit: onEdit,
-          onDelete: onDelete,
+    return Semantics(
+      identifier: 'todo_item_container_$index',
+      container: true,
+      child: Card(
+        margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.xs,
+          ),
+          leading: TodoCheckbox(
+            completed: todo.completed,
+            isPending: todo.isPending,
+            onToggle: onToggle,
+            index: index,
+          ),
+          title: TodoTitle(
+            title: todo.title,
+            completed: todo.completed,
+            isPending: todo.isPending,
+            index: index,
+          ),
+          subtitle: TodoSubtitle(createdAt: todo.createdAt),
+          trailing: TodoTrailing(
+            isPending: todo.isPending,
+            onEdit: onEdit,
+            onDelete: onDelete,
+            index: index,
+          ),
         ),
       ),
     );
