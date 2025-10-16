@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:maestro_test/core/design_system/app_colors.dart';
 import 'package:maestro_test/core/design_system/app_spacing.dart';
-import 'package:maestro_test/core/design_system/app_typography.dart';
 import 'package:maestro_test/data/models/domain/todo.dart';
+import 'package:maestro_test/features/todo/widgets/components/todo_checkbox.dart';
+import 'package:maestro_test/features/todo/widgets/components/todo_subtitle.dart';
+import 'package:maestro_test/features/todo/widgets/components/todo_title.dart';
+import 'package:maestro_test/features/todo/widgets/components/todo_trailing.dart';
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
@@ -27,68 +29,23 @@ class TodoItem extends StatelessWidget {
           horizontal: AppSpacing.md,
           vertical: AppSpacing.xs,
         ),
-        leading: Checkbox(
-          value: todo.completed,
-          onChanged: todo.isPending ? null : (_) => onToggle(),
+        leading: TodoCheckbox(
+          completed: todo.completed,
+          isPending: todo.isPending,
+          onToggle: onToggle,
         ),
-        title: Text(
-          todo.title,
-          style: AppTypography.bodyLarge.copyWith(
-            decoration: todo.completed ? TextDecoration.lineThrough : null,
-            color: todo.isPending
-                ? AppColors.textSecondary
-                : todo.completed
-                    ? AppColors.textSecondary
-                    : AppColors.textPrimary,
-          ),
+        title: TodoTitle(
+          title: todo.title,
+          completed: todo.completed,
+          isPending: todo.isPending,
         ),
-        subtitle: Text(
-          _formatDate(todo.createdAt),
-          style: AppTypography.caption,
+        subtitle: TodoSubtitle(createdAt: todo.createdAt),
+        trailing: TodoTrailing(
+          isPending: todo.isPending,
+          onEdit: onEdit,
+          onDelete: onDelete,
         ),
-        trailing: todo.isPending
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              )
-            : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit, size: 20),
-                    onPressed: onEdit,
-                    color: AppColors.primary,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete, size: 20),
-                    onPressed: onDelete,
-                    color: AppColors.error,
-                  ),
-                ],
-              ),
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final diff = now.difference(date);
-
-    if (diff.inDays == 0) {
-      if (diff.inHours == 0) {
-        if (diff.inMinutes == 0) {
-          return 'Agora';
-        }
-        return '${diff.inMinutes}m atrás';
-      }
-      return '${diff.inHours}h atrás';
-    } else if (diff.inDays == 1) {
-      return 'Ontem';
-    } else if (diff.inDays < 7) {
-      return '${diff.inDays}d atrás';
-    } else {
-      return '${date.day}/${date.month}/${date.year}';
-    }
   }
 }
