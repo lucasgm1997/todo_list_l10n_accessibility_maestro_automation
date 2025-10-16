@@ -2,26 +2,31 @@ appId: com.example.maestro_test
 
 # Import constants from constants.yaml
 env:
-  file: constants.yaml
+    TODO_ADD_INPUT: todo_add_input
+    TODO_ADD_BUTTON: todo_add_button
+    TODO_ITEM_TITLE: todo_item_title
+    TODO_ITEM_CHECKBOX: todo_item_checkbox
+    TODO_ITEM_DELETE_BUTTON: todo_item_delete_button
 
 ---
-- launchApp
-
+- launchApp:
+      appId: "com.example.maestro_test"
+      clearState: true
 # Add a new todo
 - tapOn:
-    id: ${TODO_ADD_INPUT}
+      id: ${TODO_ADD_INPUT}
 - inputText: "Test task from Maestro"
 - tapOn:
-    id: ${TODO_ADD_BUTTON}
+      id: ${TODO_ADD_BUTTON}
 
 # Verify todo was added
 - assertVisible:
-    id: ${TODO_ITEM_TITLE}
+      id: ${TODO_ITEM_TITLE}
 
 # Mark as complete
 - tapOn:
-    id: ${TODO_ITEM_CHECKBOX}
+      id: ${TODO_ITEM_CHECKBOX}
 
 # Delete the todo
 - tapOn:
-    id: ${TODO_ITEM_DELETE_BUTTON}
+      id: ${TODO_ITEM_DELETE_BUTTON}
