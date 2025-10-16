@@ -1,9 +1,8 @@
 appId: com.example.maestro_test
 
-# Import constants
+# Import constants from constants.yaml
 env:
-  extends:
-    - constants.yaml
+  file: constants.yaml
 
 ---
 - launchApp
