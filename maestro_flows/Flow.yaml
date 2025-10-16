@@ -1,0 +1,5 @@
+appId: com.example.maestro_test
+---
+- tapOn: "Nova tarefa\nDigite uma tarefa..."
+- inputText: "aaa"
+- tapOn: "Adicionar"
