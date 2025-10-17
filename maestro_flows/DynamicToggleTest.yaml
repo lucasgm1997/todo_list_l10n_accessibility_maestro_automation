@@ -1,0 +1,121 @@
+appId: com.example.maestro_test
+
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to load
+- assertVisible:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+
+# Test dynamic items: Toggle first, middle, and last items if they exist
+# This approach uses conditional runFlow to handle varying item counts
+
+# Store test results
+- evalScript: ${output.itemsFound = 0}
+- evalScript: ${output.itemsToggled = 0}
+
+# Try to find and toggle FIRST item (index 0)
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_0
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_0
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled first item (index 0)')}
+
+# Try to find and toggle MIDDLE items (indices 3-6)
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_3
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_3
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled middle item (index 3)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_4
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_4
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled middle item (index 4)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_5
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_5
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled middle item (index 5)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_6
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_6
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled middle item (index 6)')}
+
+# Try to find and toggle LAST items (indices 7-10)
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_7
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_7
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled last item (index 7)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_8
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_8
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled last item (index 8)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_9
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_9
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled last item (index 9)')}
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_10
+    commands:
+      - evalScript: ${output.itemsFound++}
+      - tapOn:
+          id: todo_item_checkbox_10
+      - evalScript: ${output.itemsToggled++}
+      - evalScript: ${console.log('Toggled last item (index 10)')}
+
+# Log final results
+- evalScript: ${console.log('Test completed: Found ' + output.itemsFound + ' items, toggled ' + output.itemsToggled)}

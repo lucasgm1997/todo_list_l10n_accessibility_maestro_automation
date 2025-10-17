@@ -1,0 +1,78 @@
+appId: com.example.maestro_test
+
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to load
+- assertVisible:
+    id: ${MAESTRO_TODO_ADD_INPUT}
+
+# Test with dynamic items from mock backend
+
+# 1. Toggle FIRST item (index 0) if it exists
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_0
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_0
+
+# 2. Toggle MIDDLE items (indices 3, 4, 5) if they exist
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_3
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_3
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_4
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_4
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_5
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_5
+
+# 3. Toggle LAST items (indices 7, 8, 9, 10) if they exist
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_7
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_7
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_8
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_8
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_9
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_9
+
+- runFlow:
+    when:
+      visible:
+        id: todo_item_checkbox_10
+    commands:
+      - tapOn:
+          id: todo_item_checkbox_10
