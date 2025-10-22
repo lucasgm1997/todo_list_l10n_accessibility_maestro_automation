@@ -24,16 +24,18 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var identifier = 'elevated_button_toggle';
     return Column(
       children: [
         Semantics(
-          label: 'elaveted-id',
+          identifier: identifier,
+          container: true,
           child: ExcludeSemantics(
             child: ElevatedButton(
               onPressed: () {
                 onToggle();
               },
-              child: Text('Toggle'),
+              child: const Text('Toggle'),
             ),
           ),
         ),
