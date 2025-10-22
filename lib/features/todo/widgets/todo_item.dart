@@ -24,32 +24,47 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.xs,
+    return Column(
+      children: [
+        Semantics(
+          label: 'elaveted-id',
+          child: ExcludeSemantics(
+            child: ElevatedButton(
+              onPressed: () {
+                onToggle();
+              },
+              child: Text('Toggle'),
+            ),
+          ),
         ),
-        leading: TodoCheckbox(
-          completed: todo.completed,
-          isPending: todo.isPending,
-          onToggle: onToggle,
+        Card(
+          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.xs,
+            ),
+            leading: TodoCheckbox(
+              completed: todo.completed,
+              isPending: todo.isPending,
+              onToggle: onToggle,
+            ),
+            title: TodoTitle(
+              title: todo.title,
+              completed: todo.completed,
+              isPending: todo.isPending,
+              // index: index,
+            ),
+            subtitle: TodoSubtitle(createdAt: todo.createdAt),
+            trailing: TodoTrailing(
+              isPending: todo.isPending,
+              onEdit: onEdit,
+              onDelete: onDelete,
+              index: index,
+            ),
+          ),
         ),
-        title: TodoTitle(
-          title: todo.title,
-          completed: todo.completed,
-          isPending: todo.isPending,
-          // index: index,
-        ),
-        subtitle: TodoSubtitle(createdAt: todo.createdAt),
-        trailing: TodoTrailing(
-          isPending: todo.isPending,
-          onEdit: onEdit,
-          onDelete: onDelete,
-          index: index,
-        ),
-      ),
+      ],
     );
   }
 }

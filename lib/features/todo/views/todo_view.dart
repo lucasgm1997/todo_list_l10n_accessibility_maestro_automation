@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maestro_test/core/design_system/app_colors.dart';
 import 'package:maestro_test/core/design_system/app_spacing.dart';
@@ -9,6 +10,7 @@ import 'package:maestro_test/di/service_locator.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
 import 'package:maestro_test/l10n/app_localizations.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class TodoView extends StatefulWidget {
   final Locale currentLocale;
@@ -174,6 +176,87 @@ class _TodoViewState extends State<TodoView> {
             child: Text(l10n.todo_action_delete),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showTodosBottomSheet() {
+    final l10n = AppLocalizations.of(context)!;
+
+    showCupertinoModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.9,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        expand: false,
+        builder: (context, scrollController) => Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColors.textSecondary.withOpacity(0.2),
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(l10n.todo_list_title, style: AppTypography.h2),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListenableBuilder(
+                listenable: _viewModel,
+                builder: (context, _) {
+                  if (_viewModel.todos.isEmpty) {
+                    return Center(
+                      child: Text(
+                        l10n.todo_empty_state_message,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    controller: scrollController,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount: _viewModel.todos.length,
+                    itemBuilder: (context, index) {
+                      final todo = _viewModel.todos[index];
+                      return TodoItem(
+                        todo: todo,
+                        index: index,
+                        onToggle: () =>
+                            _viewModel.toggleCommand.execute(todo.id),
+                        onDelete: () {
+                          Navigator.pop(context);
+                          _showDeleteConfirmation(todo.id);
+                        },
+                        onEdit: () {
+                          Navigator.pop(context);
+                          _showEditDialog(todo.id, todo.title);
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -348,6 +431,11 @@ class _TodoViewState extends State<TodoView> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _showTodosBottomSheet,
+        icon: const Icon(Icons.list),
+        label: const Text('View Modal'),
       ),
     );
   }
