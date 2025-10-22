@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maestro_test/core/design_system/app_theme.dart';
 import 'package:maestro_test/di/service_locator.dart';
+import 'package:maestro_test/features/todo/views/list_page.dart';
 import 'package:maestro_test/features/todo/views/todo_view.dart';
 import 'package:maestro_test/l10n/app_localizations.dart';
 
@@ -35,16 +36,13 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale, // Current selected locale
-
       // Theme configuration
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
 
-      home: TodoView(
-        currentLocale: _locale,
-        onLocaleChanged: _changeLocale,
-      ),
+      // home: ListPageBuilder(),
+      home: TodoView(currentLocale: _locale, onLocaleChanged: _changeLocale),
     );
   }
 }

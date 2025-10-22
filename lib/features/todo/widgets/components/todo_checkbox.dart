@@ -30,9 +30,11 @@ class TodoCheckbox extends StatelessWidget {
           : l10n.todo_item_checkbox,
       checked: completed,
       enabled: !isPending,
-      child: Checkbox(
-        value: completed,
-        onChanged: isPending ? null : (_) => onToggle(),
+      child: ExcludeSemantics(
+        child: Checkbox(
+          value: completed,
+          onChanged: isPending ? null : (_) => onToggle(),
+        ),
       ),
     );
   }
