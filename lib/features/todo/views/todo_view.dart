@@ -9,6 +9,7 @@ import 'package:maestro_test/core/widgets/primary_button.dart';
 import 'package:maestro_test/di/service_locator.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
+import 'package:maestro_test/features/todo/views/bottom_sheet_button.dart';
 import 'package:maestro_test/l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -266,8 +267,23 @@ class _TodoViewState extends State<TodoView> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      bottomSheet: SizedBox(
+        width: double.infinity,
+        height: 300,
+        child: Container(
+          color: Colors.orange,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            children: [
+              BottomSheetButton(onPressed: () {}),
+              BottomSheetButton(onPressed: () {}),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: Text(l10n.todo_list_title),
+
         actions: [
           // Language switcher button
           LanguageSwitcher(
