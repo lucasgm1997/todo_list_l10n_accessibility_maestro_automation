@@ -43,7 +43,8 @@ dependencies:
   intl: any
   modal_bottom_sheet: ^3.0.0
   flutter_cache_manager: ^3.4.1
-  pdf_render: ^1.4.12
+  pdf_render:
+    path: packages/flutter_pdf_render
 
 dev_dependencies:
   flutter_test:
