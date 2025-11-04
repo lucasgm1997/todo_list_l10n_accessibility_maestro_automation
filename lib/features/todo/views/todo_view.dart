@@ -7,6 +7,7 @@ import 'package:maestro_test/core/widgets/language_switcher.dart';
 import 'package:maestro_test/core/widgets/text_input.dart';
 import 'package:maestro_test/core/widgets/primary_button.dart';
 import 'package:maestro_test/di/service_locator.dart';
+import 'package:maestro_test/features/pdf_viewer/pdf_viewer_screen.dart';
 import 'package:maestro_test/features/todo/view_models/todo_view_model.dart';
 import 'package:maestro_test/features/todo/widgets/todo_item.dart';
 import 'package:maestro_test/features/todo/views/bottom_sheet_button.dart';
@@ -285,6 +286,19 @@ class _TodoViewState extends State<TodoView> {
         title: Text(l10n.todo_list_title),
 
         actions: [
+          // PDF Viewer button
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            tooltip: 'PDF Viewer Demo',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PdfViewerScreen(),
+                ),
+              );
+            },
+          ),
           // Language switcher button
           LanguageSwitcher(
             currentLocale: widget.currentLocale,

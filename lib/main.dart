@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:maestro_test/core/design_system/app_theme.dart';
 import 'package:maestro_test/di/service_locator.dart';
-import 'package:maestro_test/features/todo/views/list_page.dart';
+
 import 'package:maestro_test/features/todo/views/todo_view.dart';
 import 'package:maestro_test/l10n/app_localizations.dart';
 
@@ -45,4 +46,18 @@ class _MyAppState extends State<MyApp> {
       home: TodoView(currentLocale: _locale, onLocaleChanged: _changeLocale),
     );
   }
+}
+
+class CustomCacheManager {
+  static const key = 'customCacheKey';
+  static CacheManager instance = CacheManager(
+    Config(
+      key,
+      stalePeriod: const Duration(days: 7),
+      maxNrOfCacheObjects: 20,
+      repo: JsonCacheInfoRepository(databaseName: key),
+      fileSystem: IOFileSystem(key),
+      fileService: HttpFileService(),
+    ),
+  );
 }
